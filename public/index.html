@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#090a16">
+  <meta name="description" content="5秒で答えろ。観客とAIのお題が次々飛んでくる、1対多のフラッシュ大喜利ゲーム。">
+  <title>FLASH OGIRI — 5秒で答えろ。</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <div class="ambient amb-one"></div><div class="ambient amb-two"></div>
+  <div class="wrap">
+    <header class="topbar">
+      <div class="brand"><span class="brand-icon">⚡</span><span>FLASH <strong>OGIRI</strong></span></div>
+      <div class="connection"><span class="connection-dot" id="connection-dot"></span><span id="connection-label">ルーム参加時に接続</span></div>
+    </header>
+
+    <main id="landing" class="landing">
+      <section class="headline">
+        <div class="eyebrow">5 SECOND COMEDY CHALLENGE</div>
+        <h1>ひらめけ。<br><span>5秒で。</span></h1>
+        <p>1人が60秒、みんなで出題。<br>5秒以内に回答して、次の挑戦者へ自動交代！</p>
+        <div class="rules-strip"><span><b>+10</b> 回答成功</span><span><b>−5</b> 時間切れ</span><span><b>+5</b> 出題採用</span></div>
+      </section>
+      <section class="entry card">
+        <div class="entry-top"><span class="section-index">01 / JOIN GAME</span><span class="five-mark">05<span>SEC</span></span></div>
+        <h2>さあ、はじめよう。</h2>
+        <p class="muted">同じルームに2人以上集まればプレイできます。</p>
+        <label for="nickname">プレイヤー名</label>
+        <input id="nickname" autocomplete="nickname" maxlength="16" placeholder="名前を入力（例：たろう）" />
+        <button id="create-btn" class="btn btn-primary btn-wide">新しいルームを作る <span>↗</span></button>
+        <div class="or-divider"><span>または、ルームに参加</span></div>
+        <label for="join-code">6桁のルームコード</label>
+        <div class="join-row"><input id="join-code" inputmode="numeric" maxlength="6" placeholder="000000"><button id="join-btn" class="btn btn-outline">参加</button></div>
+        <p id="landing-error" class="inline-error" role="alert"></p>
+      </section>
+      <div class="landing-foot"><span>01 · お題を送る</span><span>02 · 5秒で答える</span><span>03 · 60秒で自動交代</span><span>04 · 1周してランキング</span></div>
+    </main>
+
+    <main id="game" class="game hidden">
+      <div class="room-heading">
+        <div><span class="overline">LIVE GAME ROOM</span><div class="room-title">ルーム <span id="room-code" class="code-digit"></span> <button id="copy-room" class="mini-btn" title="招待リンクをコピー">招待リンクをコピー ↗</button></div></div>
+        <button id="leave-btn" class="mini-btn muted-button">退出する</button>
+      </div>
+      <div class="game-grid">
+        <section class="main-stage card" id="stage" aria-live="polite"></section>
+        <aside class="sidebar">
+          <section class="card leaderboard"><div class="small-heading"><h3>ランキング</h3><span id="player-count" class="tag">0 PLAYERS</span></div><div id="score-list"></div></section>
+          <section id="question-panel" class="card question-panel">
+            <div class="small-heading"><h3>お題を送る</h3><span class="tag">+5 PT</span></div>
+            <p class="muted small">自分のお題が使われると5点獲得。回答者が自分のお題を引くことはありません。</p>
+            <label for="question-text">オリジナルのお題</label>
+            <textarea id="question-text" maxlength="90" rows="3" placeholder="例：こんな校長先生は嫌だ。どんな人？"></textarea>
+            <button id="submit-question" class="btn btn-primary btn-wide">お題を投稿 <span>＋</span></button>
+            <div class="queue-note"><span class="dot"></span>出題待ち <strong id="queue-count">0</strong> 問</div>
+            <div class="soft-rule"></div>
+            <div class="ai-label"><span>✦ AIにお題を考えてもらう</span></div>
+            <p class="muted small">候補から選んで投稿できます。API未設定なら内蔵お題を提案します。</p>
+            <div class="ai-row"><select id="genre" aria-label="ジャンル"><option value="学校">学校</option><option value="日常">日常</option><option value="ゲーム">ゲーム</option><option value="恋愛">恋愛</option><option value="意味不明">意味不明</option><option value="AI・未来">AI・未来</option></select><button id="suggest-btn" class="btn btn-outline">3つ提案 ✦</button></div>
+            <div id="suggestions" class="suggestions" aria-live="polite"></div>
+          </section>
+          <section class="tips">💡 回答は口頭でOK。5秒以内に「回答した！」を押すと成功です。ホストも判定できます。</section>
+        </aside>
+      </div>
+    </main>
+    <footer>FLASH OGIRI <span>© PARTY GAME PROTOTYPE</span></footer>
+  </div>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script src="/static/app.js" defer></script>
+</body>
+</html>
